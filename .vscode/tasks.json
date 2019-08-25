@@ -1,0 +1,19 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"group": "build",
+			"label": "Sass Compile",
+			"command": "node-sass thetwo-ajax-search/public/sass/thetwo-ajax-search-public.scss -o thetwo-ajax-search/public/css"
+		},
+		{
+			"type": "shell",
+			"group": "build",
+			"label": "Sass Watch",
+			"command": "node-sass thetwo-ajax-search/public/sass/thetwo-ajax-search-public.scss -ow thetwo-ajax-search/public/css/"
+		}
+	]
+}
