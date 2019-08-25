@@ -120,8 +120,11 @@ class Thetwo_Ajax_Search_Public
 		wp_localize_script($this->thetwo_ajax_search, 'search_results', array(
 			'ajaxurl' => admin_url('admin-ajax.php'),
 			'security'  => wp_create_nonce('thetwo_ajax_search-nonce'),
-			$this->version,
-		));
+			'no_res_translate' => __('We couldnt find any results', $this->thetwo_ajax_search),
+			'try_again_translate' => __('You can try again', $this->thetwo_ajax_search),
+			'search_results_title_translate'	=> __('The Search Results', $this->thetwo_ajax_search),
+			'at_translate' => __('at', $this->thetwo_ajax_search),
+		), $this->version);
 	}
 
 	public function go_search_results()

@@ -7,13 +7,13 @@
 			"type": "shell",
 			"group": "build",
 			"label": "Sass Compile",
-			"command": "node-sass thetwo-ajax-search/public/sass/thetwo-ajax-search-public.scss -o thetwo-ajax-search/public/css"
+			"command": "node-sass public/sass/thetwo-ajax-search-public.scss -o public/css"
 		},
 		{
 			"type": "shell",
 			"group": "build",
 			"label": "Sass Watch",
-			"command": "node-sass thetwo-ajax-search/public/sass/thetwo-ajax-search-public.scss -ow thetwo-ajax-search/public/css/"
+			"command": "node-sass public/sass/thetwo-ajax-search-public.scss -ow public/css/"
 		}
 	]
 }

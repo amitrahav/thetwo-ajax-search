@@ -20,7 +20,7 @@
     <div class="inner search" id="main-search-wrapper">
         <div class="search-wrapper">
             <form role="search" method="get" class="searchform" action="<?php echo home_url(); ?>">
-                <input class="main-search-field bp" id="main-search-field" placeholder="חפשו הכל" type="text" value="" name="s">
+                <input class="main-search-field bp" id="main-search-field" placeholder="<?= _e('Search'); ?>" type="text" value="" name="s">
                 <i class="fa fa-search" aria-hidden="true"></i>
                 <i class="fa fa-circle-o-notch fa-spin" aria-hidden="true"></i>
                 <i class="fa fa-times-circle" aria-hidden="true" id="main-search-x"></i>

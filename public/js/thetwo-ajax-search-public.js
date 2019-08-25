@@ -14,7 +14,9 @@
 
 		function addResults(results) {
 			if ($("#main-search-results h5").length === 0) {
-				$("#main-search-results").append("<h5>תוצאות החיפוש</h5>");
+				$("#main-search-results").append(
+					"<h5>" + search_results.search_results_title_translate + "</h5>"
+				);
 			}
 
 			if (results.length > 0) {
@@ -23,14 +25,24 @@
 					postMonth = postDate.getMonth();
 					postYear = postDate.getFullYear();
 					postDay = postDate.getDate();
-					var theDate = postDay + " ב" + months[postMonth] + " " + postYear;
+					var theDate =
+						postDay +
+						search_results.at_translate +
+						" " +
+						months[postMonth] +
+						" " +
+						postYear;
 
-					var htmlResult =
-						"<li class='article'><a href='" +
-						result.link +
-						"'><div class='image bg' style='background: url(" +
-						result.thumbnail_url +
-						")'></div><div class='desc'><h5 class='small'>" +
+					var htmlResult = "<li class='article'><a href='" + result.link + "'>";
+
+					if (result.thumbnail_url.length) {
+						htmlResult +=
+							"<div class='image bg' style='background: url(" +
+							result.thumbnail_url +
+							")'></div>";
+					}
+					htmlResult +=
+						"<div class='desc'><h5 class='small'>" +
 						result.title +
 						"</h5><p class='grey'>" +
 						theDate +
@@ -42,7 +54,11 @@
 				});
 			} else {
 				$("#main-search-results").append(
-					"<li class='not-found'>לא הצלחנו למצוא תוצאות מתאימות. <span id='search-again'>נסו שוב.</span></li>"
+					"<li class='not-found'>" +
+						search_results.no_res_translate +
+						"<span id='search-again'>" +
+						search_results.try_again_translate +
+						"</span></li>"
 				);
 			}
 			$("#main-search-wrapper").addClass("opened");
@@ -75,9 +91,9 @@
 						results.push({
 							link: result.link,
 							title: result.title,
-							date: new Date(result.article_date),
-							content: result.article_content,
-							image: result.article_image
+							date: new Date(result.date),
+							content: result.content,
+							image: result.thumbnail_url
 						});
 					});
 					return addResults(results);
