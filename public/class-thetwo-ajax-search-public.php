@@ -148,20 +148,42 @@ class Thetwo_Ajax_Search_Public
 
 	public function main_search_html($args)
 	{
-		$wrapper_class = isset($args['wrapper_class']) ? $args['wrapper_class'] : 'serach-wrapper';
-		$form_class = isset($args['form_class']) ? $args['form_class'] : 'searchform';
-		$placeholder = isset($args['placeholder']) ?  $args['placeholder'] : 'search';
+		$wrapper_class = isset($args['wrapper_class']) ? esc_attr($args['wrapper_class']) : 'serach-wrapper';
+		$form_class = isset($args['form_class']) ? esc_attr($args['form_class']) : 'searchform';
+		$placeholder = isset($args['placeholder']) ?  sanitize_text_field($args['placeholder']) : 'search';
+		$only_button = array_key_exists('only_button', $args) ?  1 : 0;
 
-		echo '<div class="' . $wrapper_class . '">
+
+		if ($only_button) {
+			$html = '<div class="' . $wrapper_class . '" id="open-search">
+					<i class="fa fa-search" aria-hidden="true"></i>
+				</div>';
+		} else {
+			$html = '<div class="' . $wrapper_class . '">
 				<form role="search" method="get" id="searchform" class="' . $form_class . '" action="' . home_url() . '">
 					<input id="like-search" placeholder="' . $placeholder . '" type="text" value="" autofocus>
 					<i class="fa fa-search" aria-hidden="true"></i>
 				</form>
 			</div>';
+		}
+		echo $html;
 	}
 
 	public function search_popup_include()
 	{
 		include('partials/thetwo-ajax-search-public-display.php');
+	}
+
+	public function add_search_button($items, $args)
+	{
+		$settings = (object) get_option($this->thetwo_ajax_search . "-settings");
+		if ($args->menu->name == $settings->append_menu) {
+			if ($settings->remove_input == 1) {
+				$items .= '<li>' . do_shortcode('[thetwo-ajax-search only_button=1]') . '</li>';
+			} else {
+				$items .= '<li>' . do_shortcode('[thetwo-ajax-search]') . '</li>';
+			}
+		}
+		return $items;
 	}
 }

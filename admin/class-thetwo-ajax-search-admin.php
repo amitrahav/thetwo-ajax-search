@@ -100,4 +100,85 @@ class Thetwo_Ajax_Search_Admin
 
 		wp_enqueue_script($this->thetwo_ajax_search, plugin_dir_url(__FILE__) . 'js/thetwo-ajax-search-admin.js', array('jquery'), $this->version, false);
 	}
+
+	public function setting_field()
+	{
+
+		//section name, display name, callback to print description of section, page to which section is attached.
+		add_settings_section("thetwo_search_section", "TheTwo Search", array(&$this, "display_header_options_content"), "general");
+
+		//setting name, display name, callback to print form element, page in which field is displayed, section to which it belongs.
+		//last field section is optional.
+		add_settings_field(
+			$this->thetwo_ajax_search .  '-remove_input',
+			'Only search icon (without field)',
+			array($this, 'remove_input_callback_function'),
+			'general',
+			'thetwo_search_section',
+			array('label_for' => $this->thetwo_ajax_search .  '-remove_input')
+		);
+		add_settings_field(
+			$this->thetwo_ajax_search .  '-append_menu',
+			'Add Button To Menu',
+			array($this, 'append_menu_callback_function'),
+			'general',
+			'thetwo_search_section',
+			array('label_for' => $this->thetwo_ajax_search .  '-append_menu')
+		);
+
+		//section name, form element name, callback for sanitization
+		register_setting("general", $this->thetwo_ajax_search .  '-settings', array($this, 'sanitization'));
+	}
+
+	public function sanitization($input)
+	{
+		$sanitary_values = array();
+		$object = json_decode(json_encode($input), FALSE);
+		$input = (object) $input;
+
+		if (isset($object->remove_input) && ($object->remove_input == 1 || $object->remove_input == 0)) {
+			$sanitary_values['remove_input'] = $object->remove_input;
+		}
+
+		if (isset($object->append_menu) && is_string($object->append_menu)) {
+			$sanitary_values['append_menu'] = sanitize_text_field($object->append_menu);
+		}
+
+		error_log(print_r($sanitary_values, true));
+		return (array) $sanitary_values;
+	}
+
+	public function display_header_options_content()
+	{
+		_e("All Ajax search settings", $this->thetwo_ajax_search);
+	}
+
+	public function remove_input_callback_function()
+	{
+		$name = $this->thetwo_ajax_search . "-settings[remove_input]";
+		$selected = (object) get_option($this->thetwo_ajax_search . "-settings");
+		echo '<input type="checkbox" name="' . $name . '" id="' . $name . '" value="1" ' . checked(1, $selected->remove_input, false) . ' />';
+	}
+	public function append_menu_callback_function()
+	{
+		$name = $this->thetwo_ajax_search . "-settings[append_menu]";
+		$selected = (object) get_option($this->thetwo_ajax_search . "-settings");
+		$navs = get_terms('nav_menu', array('hide_empty' => true));
+
+		$html = '<select name="' . $name . '" id="' . $name . '">';
+		$html .= '<option>'  . __('None (use search only with shortcode)', $this->thetwo_ajax_search) . '</option>';
+
+		foreach ($navs as $nav) {
+			$html .= '<option value="' . $nav->slug . '" ' . selected($selected->append_menu, $nav->name, false) . '>' . $nav->name . '</option>';
+		}
+		$html .= '</select>';
+		echo $html;
+	}
+
+	public function add_action_links($links)
+	{
+		$links[] = '<a href="' . admin_url('options-general.php') . '">' . _('Settings', $this->thetwo_ajax_search) . '</a>';
+
+		return $links;
+	}
 }

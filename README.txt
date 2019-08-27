@@ -17,7 +17,15 @@ Using `[thetwo-ajax-search]` shortcode, you can easily include a beautiful displ
 After typing 3 letters at the search input - a search popup will come up, body will go dark and the search term will be sent via ajax with jQuery to the search fucntion.
 This Plugin has languages support with .pot file at the /languages/ folder.
 
+== Usage ==
+The plugin will make `[thetwo-ajax-search]` avilable with those parmeters:
+* wrapper_class - detrmine the wrapper class.
+* form_class - for the input form
+* placeholder - for the search input placeholder
+* only_button - if appears, the only thing displayed will be the button.
 
+If you want, you can attach the search input and icon to any of your navigation menus.
+The General Settings menu at the admin panel will help you set the search bar wehre you want it.
 == Logic ==
 
 The search Process:

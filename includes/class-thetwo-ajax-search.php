@@ -158,6 +158,8 @@ class Thetwo_Ajax_Search
 
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
 		$this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+		$this->loader->add_action('admin_init', $plugin_admin, 'setting_field');
+		$this->loader->add_filter('plugin_action_links_' . $this->thetwo_ajax_search, $plugin_admin, 'add_action_links');
 	}
 
 	/**
@@ -185,6 +187,9 @@ class Thetwo_Ajax_Search
 
 		// SearchBar Shortcode
 		add_shortcode($this->thetwo_ajax_search, array(&$plugin_public, 'main_search_html'));
+
+		// Nav Menu Append Button
+		$this->loader->add_action('wp_nav_menu_items', $plugin_public, 'add_search_button', 10, 2);
 	}
 
 
