@@ -16,6 +16,7 @@
 		@include absolute-full;
 		z-index: 1;
 	}
+
 	.inner {
 		@include absolute-center(1050px, 562.5px);
 		@include box-shadow(5);
@@ -25,7 +26,6 @@
 		&.search {
 			@include absolute-center(600px, 50px);
 			background: transparent;
-			overflow: hidden;
 			padding: 0;
 			background: transparent;
 			@include box-shadow(0);
@@ -33,8 +33,30 @@
 			&.opened {
 				@include absolute-center(600px, 370px);
 				.search-results-wrapper {
+					opacity: 1;
 					transform: translateY(0);
 					-webkit-transform: translateY(0);
+				}
+			}
+			.close-search-popup {
+				width: 20px;
+				z-index: 2222;
+				height: 20px;
+				color: white;
+				top: -40px;
+				z-index: 22222222;
+				position: relative;
+				font-size: 20px;
+				right: 20px;
+				cursor: pointer;
+				i.fa-times-circle {
+					color: white;
+					height: inherit;
+					line-height: 20px;
+					position: static;
+					visibility: visible;
+					display: block;
+					opacity: 1;
 				}
 			}
 			.search-wrapper {
@@ -50,7 +72,8 @@
 						width: 100%;
 						height: 100%;
 						outline: 0;
-						font-size: 19px;
+						font-family: inherit;
+						font-size: 16px;
 						color: black;
 						padding-right: 50px;
 						text-align: right;
@@ -82,6 +105,7 @@
 					}
 				}
 				.fa-times-circle {
+					cursor: pointer;
 					position: absolute;
 					left: 20px;
 					top: 0;
@@ -99,6 +123,7 @@
 				}
 			}
 			.search-results-wrapper {
+				opacity: 0;
 				overflow: auto;
 				position: absolute;
 				height: 300px;
@@ -112,6 +137,11 @@
 				-webkit-transform: translateY(100%);
 				@include box-shadow(5);
 				@include base-transition(0.4s);
+				@media screen and (max-width: 640px) {
+					width: calc(100% - 50px);
+					left: 20px;
+					margin-left: 0;
+				}
 			}
 			#main-search-results {
 				position: relative;
@@ -153,6 +183,7 @@
 		}
 		&.relative {
 			position: relative;
+			width: 100%;
 			max-width: 600px;
 			height: auto;
 			padding: 10px;
@@ -164,7 +195,8 @@
 			height: 100%;
 			position: relative;
 			.center-wrapper {
-				width: 600px;
+				width: 100%;
+				max-width: 600px;
 				left: 50%;
 				margin-left: -300px;
 			}
@@ -209,4 +241,8 @@
 			@include base-transition(0.4s);
 		}
 	}
+}
+
+input {
+	font-family: inherit !important;
 }

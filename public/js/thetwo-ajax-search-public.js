@@ -21,24 +21,15 @@
 
 			if (results.length > 0) {
 				$.each(results, function(index, result) {
-					var postDate = result.date;
-					postMonth = postDate.getMonth();
-					postYear = postDate.getFullYear();
-					postDay = postDate.getDate();
-					var theDate =
-						postDay +
-						search_results.at_translate +
-						" " +
-						months[postMonth] +
-						" " +
-						postYear;
+					console.log(result);
+					var theDate = result.date;
 
 					var htmlResult = "<li class='article'><a href='" + result.link + "'>";
 
-					if (result.thumbnail_url.length) {
+					if (result.image.length) {
 						htmlResult +=
 							"<div class='image bg' style='background: url(" +
-							result.thumbnail_url +
+							result.image +
 							")'></div>";
 					}
 					htmlResult +=
@@ -68,7 +59,7 @@
 		function goSearch(searchTerm) {
 			if (searchTerm.length < 3) {
 				$("#main-search-results").empty();
-				$(".fa-times-circle").removeClass("show");
+				$("#main-search-x").removeClass("show");
 			}
 			$.ajax({
 				url: search_results.ajaxurl,
@@ -81,17 +72,19 @@
 				},
 				success: function(response) {
 					$(".fa-circle-o-notch").removeClass("show");
-					$(".fa-times-circle").addClass("show");
+					$("#main-search-x").addClass("show");
 					$("#main-search-results").empty();
 					$("#main-search-results .not-found").remove();
 
 					var results = [];
 
 					$.each(response, function(index, result) {
+						console.log(result);
+
 						results.push({
 							link: result.link,
 							title: result.title,
-							date: new Date(result.date),
+							date: result.date,
 							content: result.content,
 							image: result.thumbnail_url
 						});
@@ -122,14 +115,28 @@
 			closePopup();
 		});
 
+		$(".close-search-popup").click(function() {
+			closePopup();
+		});
+
 		$("body").keyup(function(e) {
 			if (e.keyCode == 27) {
 				closePopup();
 			}
 		});
 
+		// Dont submit main search on enter
 		$(".main-search-field").keypress(function(event) {
 			if (event.which == 13) event.preventDefault();
+		});
+
+		// Clear Input
+		$("#main-search-x").click(function(event) {
+			$("input#main-search-field").val("");
+			$("#main-search-wrapper").removeClass("opened");
+			$("#main-search-results").empty();
+			$(".fa-circle-o-notch").removeClass("show");
+			$("#main-search-x").removeClass("show");
 		});
 
 		// search popup
@@ -155,14 +162,14 @@
 				$("#popup-search").show();
 				$("body").addClass("overflow");
 				$(".fa-circle-o-notch").addClass("show");
-				$(".fa-times-circle").removeClass("show");
+				$("#main-search-x").removeClass("show");
 
 				goSearch(searchTerm);
 			} else if (searchTerm.length < 3) {
 				$("#main-search-wrapper").removeClass("opened");
 				$("#main-search-results").empty();
 				$(".fa-circle-o-notch").removeClass("show");
-				$(".fa-times-circle").removeClass("show");
+				$("#main-search-x").removeClass("show");
 			}
 
 			setTimeout(function() {

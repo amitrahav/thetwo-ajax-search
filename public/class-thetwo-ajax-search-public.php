@@ -116,7 +116,11 @@ class Thetwo_Ajax_Search_Public
 		 * between the defined hooks and the functions defined in this
 		 * class.
 		 */
-
+		$months = (array) array();
+		for ($m = 1; $m <= 12; $m++) {
+			$month = date_i18n('F', mktime(0, 0, 0, $m, 1, date('Y')));
+			$months[] = $month;
+		}
 		wp_localize_script($this->thetwo_ajax_search, 'search_results', array(
 			'ajaxurl' => admin_url('admin-ajax.php'),
 			'security'  => wp_create_nonce('thetwo_ajax_search-nonce'),
@@ -124,6 +128,7 @@ class Thetwo_Ajax_Search_Public
 			'try_again_translate' => __('You can try again', $this->thetwo_ajax_search),
 			'search_results_title_translate'	=> __('The Search Results', $this->thetwo_ajax_search),
 			'at_translate' => __('at', $this->thetwo_ajax_search),
+			'months' => $months
 		), $this->version);
 	}
 

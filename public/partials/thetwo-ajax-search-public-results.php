@@ -10,7 +10,6 @@ $args = array(
 
 $args = apply_filters("thetwo_ajax_search_query_vars_before_get_posts", $args);
 
-
 if (function_exists("relevanssi_do_query")) {
 	foreach ($args as $key => $value) {
 		$query->query_vars[$key] = $value;
@@ -27,10 +26,13 @@ foreach ($results as $result) {
 
 	$id = $result->ID;
 	$post_type = get_post_type($id);
+	$date_format = 'j F, Y';
+
+	$date_format = apply_filters("thetwo_ajax_search_date_format", $date_format);
 
 	$post_details = array(
 		'id'	=> $id,
-		'date'	=> get_the_post_date('', $id),
+		'date'	=> get_the_date($date_format, $id),
 		'title' => get_the_title($id),
 		'link' => get_post_permalink($id),
 		'content'	=> get_the_content($id),

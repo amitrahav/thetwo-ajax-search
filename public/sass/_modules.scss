@@ -50,12 +50,18 @@ $whatsapp-color: #25d366;
 
 @mixin absolute-center($width, $height) {
 	position: absolute;
-	width: $width;
+	width: 100%;
+	max-width: $width;
 	height: $height;
 	left: 50%;
 	margin-left: -1 * $width / 2;
 	top: 50%;
 	margin-top: -1 * $height / 2;
+	@media screen and (max-width: 640px) {
+		width: calc(100% - 30px);
+		left: 10px;
+		margin-left: 0;
+	}
 }
 
 @mixin fixed-full {

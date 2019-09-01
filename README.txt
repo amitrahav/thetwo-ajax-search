@@ -42,9 +42,10 @@ The search Process:
     * thumbnail
     * thumbnail_url
     * post_type
-6. Apply `thetwo_ajax_search_psot_details_before_added_to_results_array` filter - in case you want to change each post details.
-7. Add post details to returend array.
-8. Return results array with json encode into js to handle.
+6. Apply `thetwo_ajax_search_date_format` filter - in case you want to change the reutrend date format for each post - defualt is `j F, Y`, you can returen any other (wp date formate)[https://wordpress.org/support/article/formatting-date-and-time/] .
+7. Apply `thetwo_ajax_search_psot_details_before_added_to_results_array` filter - in case you want to change each post details.
+8. Add post details to returend array.
+9. Return results array with json encode into js to handle.
 
 
 It is easily ajustable for your needs with a few filters you can applay in your functions.php file.
@@ -58,6 +59,7 @@ function only_pages_search($args){
     return $args;
 }
 `
+
 = Adding post first category name to the search results =
 add this to your functions.php file:
 `
@@ -65,6 +67,16 @@ add_filter( 'thetwo_ajax_search_psot_details_before_added_to_results_array', 'ad
 function add_first_cat_name($post_details){
     $post_details['cat_name'] = get_the_category( $post_details['id'] )[0]->name
     return $post_details;
+}
+`
+
+= Use default time format for search results =
+add this to your functions.php file:
+`
+add_filter( 'thetwo_ajax_search_date_format', 'add_first_cat_name' );
+function add_first_cat_name($time_format){
+    $time_format = '';
+    return $time_format;
 }
 `
 

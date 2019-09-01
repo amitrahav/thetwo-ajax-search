@@ -19,6 +19,9 @@
     <div class="popup-background"></div>
     <div class="inner search" id="main-search-wrapper">
         <div class="search-wrapper">
+            <div class="close-search-popup">
+                <i class="fa fa-times-circle"></i>
+            </div>
             <form role="search" method="get" class="searchform" action="<?php echo home_url(); ?>">
                 <input class="main-search-field bp" id="main-search-field" placeholder="<?= _e('Search'); ?>" type="text" value="" name="s">
                 <i class="fa fa-search" aria-hidden="true"></i>
