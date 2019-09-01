@@ -21,7 +21,6 @@
 
 			if (results.length > 0) {
 				$.each(results, function(index, result) {
-					console.log(result);
 					var theDate = result.date;
 
 					var htmlResult = "<li class='article'><a href='" + result.link + "'>";
@@ -79,8 +78,6 @@
 					var results = [];
 
 					$.each(response, function(index, result) {
-						console.log(result);
-
 						results.push({
 							link: result.link,
 							title: result.title,

@@ -11,11 +11,12 @@ $args = array(
 $args = apply_filters("thetwo_ajax_search_query_vars_before_get_posts", $args);
 
 if (function_exists("relevanssi_do_query")) {
-	foreach ($args as $key => $value) {
-		$query->query_vars[$key] = $value;
-	}
+	$query = new WP_Query();
+	$query->parse_query($args);
 	relevanssi_do_query($query);
+
 	$results = $query->posts;
+	wp_reset_postdata();
 } else {
 	$results = get_posts($args);
 }
